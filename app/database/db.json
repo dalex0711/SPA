@@ -1,0 +1,64 @@
+{
+  "users": [
+    {
+      "name": "admi",
+      "email": "admi@agmail.com",
+      "password": "d63bdd77c083f9ad6f0d7a0cbe23e600448487e15e382ecdd206d2c2a2f16a27dea803663429d1c3f2cc1e154e2d91d1e00cf17c90cee6d229eef5f5d76cf3b5",
+      "rol": "admi",
+      "id": 1
+    },
+    {
+      "name": "user",
+      "email": "User@1.com",
+      "password": "944307508c25a0d0c8822f3a34e1a4adf4b5ea04ea3c62b75dd12d1be450bf5cf72ed52c16a09131de0f6605e5857fa2db834d6b41a36448a414d8b6d3dc1291",
+      "rol": "visitante",
+      "id": 2
+    },
+    {
+      "name": "user",
+      "email": "user2@2.com",
+      "password": "41609b0c05f2191e9b6db8f1569da69f9d738f1c87c1a7d0410d599e74c9c7b156d55096e75286abc3dbde82e5ec196e0381ea4bd2e16723205cc19a1f8d4d02",
+      "rol": "visitante",
+      "id": 3
+    }
+  ],
+  "events": [
+    {
+      "name": "evento 1",
+      "capacity": "7",
+      "id": 1
+    },
+    {
+      "name": "event 2",
+      "capacity": "9",
+      "id": 2
+    },
+    {
+      "name": "event  3",
+      "capacity": "9",
+      "id": 3
+    }
+  ],
+  "enrollments": [
+    {
+      "userId": 2,
+      "eventId": 1,
+      "id": 5
+    },
+    {
+      "userId": 3,
+      "eventId": 1,
+      "id": 6
+    },
+    {
+      "userId": 3,
+      "eventId": 2,
+      "id": 7
+    },
+    {
+      "userId": 3,
+      "eventId": 3,
+      "id": 8
+    }
+  ]
+}

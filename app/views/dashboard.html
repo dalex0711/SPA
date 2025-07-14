@@ -1,0 +1,39 @@
+<header>
+  <nav class="nav-bar">
+    <div></div>
+    <button class="log-out-btn">Log out</button>
+  </nav>
+</header>
+
+<main class="dashboard-main">
+  <h1>Administration panel</h1>
+
+  <section>
+    <div class="table-header">
+      <h2>Events</h2>
+      <button id="create-event-btn" class="btn-action">Create events</button>
+    </div>
+
+    <table class="event-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Event</th>
+          <th>Capacity</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+
+    <form class="form-create-event" id="f-create-event">
+      <label for="nameevent">Event name</label>
+      <input type="text" name="nameevent" id="nameEvent" required>
+
+      <label for="capacity">Capacidty</label>
+      <input type="number" name="capacity" id="capacity" required>
+
+      <button type="submit" class="btn-action">Create</button>
+    </form>
+  </section>
+</main>
