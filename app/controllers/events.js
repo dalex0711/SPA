@@ -1,10 +1,11 @@
 import { btnLogout } from '../services/logout.js';
 import { apiRequest } from '../api/request.js';
 import { getUserLogged } from '../services/storage.js';
-// import { showMessage } from '../services/messages.js'; // Descomenta si usas showMessage
+import { showMessage } from '../services/messages.js';
 
-let allEvents = []; // store all Events in memory
+let allEvents = [];
 
+// Render all event cards with enroll/unroll button
 async function renderEvents(events) {
   const container = document.getElementById('events-container');
   const template = document.getElementById('event-template');
@@ -27,6 +28,7 @@ async function renderEvents(events) {
     );
 
     if (alreadyEnrolled) {
+      // Handle unenroll button
       btn.textContent = 'Unenroll';
       btn.addEventListener('click', async () => {
         const found = enrollments.find(e =>
@@ -34,11 +36,12 @@ async function renderEvents(events) {
         );
 
         if (!found) {
-          alert('You are not enrolled in this event.');
+          showMessage('You are not enrolled in this event.', 'error');
           return;
         }
 
         await apiRequest('DELETE', `enrollments/${found.id}`);
+
         const updatedCapacity = Number(event.capacity) + 1;
         await apiRequest('PATCH', `events/${eventId}`, {
           capacity: String(updatedCapacity)
@@ -49,10 +52,11 @@ async function renderEvents(events) {
       });
 
     } else {
+      // Handle enroll button
       btn.textContent = 'Enroll';
       btn.addEventListener('click', async () => {
         if (Number(event.capacity) <= 0) {
-          alert('No available slots.');
+          showMessage('No available slots.', 'error');
           return;
         }
 
@@ -75,6 +79,7 @@ async function renderEvents(events) {
   }
 }
 
+// Filter and render only the events the user is enrolled in
 async function renderUserEvents() {
   const user = getUserLogged();
   if (!user) return;
@@ -95,6 +100,7 @@ async function renderUserEvents() {
   await renderEvents(myEvents);
 }
 
+// Initialize page: logout button, fetch all events, setup filter
 export async function init() {
   btnLogout();
 

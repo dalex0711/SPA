@@ -20,12 +20,19 @@
       "password": "41609b0c05f2191e9b6db8f1569da69f9d738f1c87c1a7d0410d599e74c9c7b156d55096e75286abc3dbde82e5ec196e0381ea4bd2e16723205cc19a1f8d4d02",
       "rol": "visitante",
       "id": 3
+    },
+    {
+      "name": "user6",
+      "email": "user6@6.com",
+      "password": "1e80c38ad5e45667fdbfbfcc428749e0a1d1d8b8e9d886af3c29de15790143adf7820b7b172e15f9e57e7b28b981d4307ae743e3739698a4ed483ed4c55b9c2e",
+      "rol": "visitante",
+      "id": 4
     }
   ],
   "events": [
     {
       "name": "evento 1",
-      "capacity": "7",
+      "capacity": "10",
       "id": 1
     },
     {

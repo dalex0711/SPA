@@ -1,13 +1,11 @@
-
-
 import { btnLogout } from '../services/logout';
 import { validateInputs } from '../services/validations';
 import { apiRequest } from '../api/request';
 import { showMessage } from '../services/messages';
 
-
 let editingId = null;
 
+// Main entry point for dashboard logic
 export async function init() {
   btnLogout();
 
@@ -17,16 +15,18 @@ export async function init() {
 
   await renderEvents(tbody, formEvent);
 
+  // Show form in creation mode
   createEvent.addEventListener('click', () => {
-    showMessage('Formulario habilitado', 'info');
+    showMessage('Form enabled', 'info');
     formEvent.style.display = 'block';
     formEvent.reset();
-    editingId = null; 
+    editingId = null; // Reset editing mode
   });
 
   setupFormEvent(formEvent, tbody);
 }
 
+// Handles form submission for both create and update
 function setupFormEvent(formEvent, tbody) {
   formEvent?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -36,41 +36,42 @@ function setupFormEvent(formEvent, tbody) {
 
     validateInputs(name, capacity);
     if (isNaN(capacity) || capacity <= 0) {
-      showMessage('Debes ingresar números válidos', 'error');
+      showMessage('Enter a valid number', 'error');
       return;
     }
 
     if (!editingId) {
+      // Prevent creating duplicated event names
       const eventsFound = await apiRequest('GET', `events?name=${name}`);
       if (eventsFound.length > 0) {
-        showMessage('El curso ya existe', 'error');
+        showMessage('This event already exists', 'error');
         return;
       }
     }
 
     try {
       if (editingId) {
-       
-        await apiRequest('PUT',`events${editingId}`,{name,capacity});
-        showMessage('Curso actualizado con éxito', 'success');
+        // Edit mode
+        await apiRequest('PUT', `events/${editingId}`, { name, capacity });
+        showMessage('Event updated successfully', 'success');
       } else {
-        // Modo creación: crear nuevo evento
-        await apiRequest('POST', 'events', {name, capacity});
-        showMessage('Curso creado con éxito', 'success');
+        // Create new event
+        await apiRequest('POST', 'events', { name, capacity });
+        showMessage('Event created successfully', 'success');
       }
 
       formEvent.reset();
       formEvent.style.display = 'none';
-      editingId = null; 
-      await renderEvents(tbody, formEvent); 
+      editingId = null;
+      await renderEvents(tbody, formEvent);
 
     } catch (error) {
-      showMessage('Error al guardar los datos', 'error');
-      console.error(error);
+      showMessage('Failed to save data', 'error');
     }
   });
 }
 
+// Renders the table with event data and setup buttons
 async function renderEvents(tbody, formEvent) {
   tbody.innerHTML = '';
 
@@ -91,7 +92,7 @@ async function renderEvents(tbody, formEvent) {
 
     tbody.appendChild(row);
 
-
+    // Handle deletion
     const deleteBtn = row.querySelector('.delete-btn');
     deleteBtn.addEventListener('click', async () => {
       const confirmDelete = confirm('¿Deseas eliminar este curso?');
@@ -99,14 +100,14 @@ async function renderEvents(tbody, formEvent) {
 
       try {
         await apiRequest('DELETE', `events/${event.id}`);
-        showMessage('Curso eliminado con éxito', 'success');
+        showMessage('Event deleted successfully', 'success');
         await renderEvents(tbody, formEvent);
       } catch (error) {
-        showMessage('Error al eliminar el curso.', 'error');
+        showMessage('Failed to delete event', 'error');
       }
     });
 
-
+    // Handle editing
     const editBtn = row.querySelector('.edit-btn');
     editBtn.addEventListener('click', async () => {
       try {
@@ -115,11 +116,11 @@ async function renderEvents(tbody, formEvent) {
         formEvent.style.display = 'block';
         document.querySelector('#nameEvent').value = oldData.name;
         document.querySelector('#capacity').value = oldData.capacity;
-        editingId = event.id; 
+        editingId = event.id;
 
-        showMessage('Modo edición habilitado', 'info');
+        showMessage('Edit mode enabled', 'info');
       } catch (error) {
-        showMessage('Error al cargar datos del curso.', 'error');
+        showMessage('Failed to load event data', 'error');
       }
     });
   });
