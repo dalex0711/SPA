@@ -1,3 +1,4 @@
+holaa
 import { showMessage } from "../services/messages";
 
 const apiUrl = 'http://localhost:3000/';
@@ -37,4 +38,5 @@ export async function apiRequest(method, endpoint = '', body = null) {
     showMessage(`Error ${error.status}: ${message}`, 'error');
     throw error;
   }
+
 }
